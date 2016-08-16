@@ -6,7 +6,7 @@
 
     <groupId>social</groupId>
     <artifactId>facebookdata</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <distributionManagement>
         <repository>
             <id>sonatype-nexus-staging</id>
@@ -69,27 +69,27 @@
 
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.scalatest</groupId>
-                <artifactId>scalatest-maven-plugin</artifactId>
-                <version>1.0</version>
-                <configuration>
-                    <stdout>W</stdout>  <!-- Skip coloring output -->
-                    <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-                    <junitxml>.</junitxml>
-                    <filereports>SchedulingServiceTestReport.txt</filereports>
-                    <htmlreporters>${project.build.directory}/html/scalatest</htmlreporters>
-                    <testFailureIgnore>false</testFailureIgnore>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>test</id>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.scalatest</groupId>-->
+                <!--<artifactId>scalatest-maven-plugin</artifactId>-->
+                <!--<version>1.0</version>-->
+                <!--<configuration>-->
+                    <!--<stdout>W</stdout>  &lt;!&ndash; Skip coloring output &ndash;&gt;-->
+                    <!--<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>-->
+                    <!--<junitxml>.</junitxml>-->
+                    <!--<filereports>SchedulingServiceTestReport.txt</filereports>-->
+                    <!--<htmlreporters>${project.build.directory}/html/scalatest</htmlreporters>-->
+                    <!--<testFailureIgnore>false</testFailureIgnore>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>test</id>-->
+                        <!--<goals>-->
+                            <!--<goal>test</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>

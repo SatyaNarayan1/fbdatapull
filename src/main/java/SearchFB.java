@@ -3,9 +3,7 @@ import facebook4j.conf.ConfigurationBuilder;
 import facebook4j.json.DataObjectFactory;
 
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 
 /**
  * Created by psatya on 16/08/16.
@@ -24,21 +22,52 @@ public class SearchFB {
         Facebook facebook = new FacebookFactory().getInstance();
 
         // facebook.getOAuthAppAccessToken();
+        BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ",";
         try {
-            PrintWriter postWriter = new PrintWriter("user_details.json", "UTF-8");
-            //facebook.postStatusMessage("Hello World from Facebook4J.");
 
-           ResponseList<User> results = facebook.searchUsers(args[0],new Reading().limit(5));
+
+
+            br = new BufferedReader(new FileReader(args[0]));
+            PrintWriter userWriter = new PrintWriter("user_details.json", "UTF-8");
+
+            while ((line = br.readLine()) != null) {
+
+                // use comma as separator
+                String[] user = line.split(cvsSplitBy);
+
+                System.out.println("fetching detail for user " + user[1]+ "]");
+
+
+
+
+           ResponseList<User> results = facebook.searchUsers(user[1],new Reading().limit(2));
            // ResponseList<Post> results = facebook.searchPosts("ICICILombard");
             for(User u : results)
-           System.out.println( u);
+            {   System.out.println( u);
+                userWriter.println(u);
+            }
+
+            }
+        userWriter.close();
         }catch( FacebookException fe )
         {
             System.out.println(fe.getErrorMessage());
         } catch (FileNotFoundException e) {
         e.printStackTrace();
           } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
         e.printStackTrace();
+    } finally {
+        if (br != null) {
+            try {
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
     }
 
