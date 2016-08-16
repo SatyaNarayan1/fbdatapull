@@ -56,7 +56,7 @@ public class PostsFromPageExtractor {
         //          new Reading().limit(25));
         try {
         PrintWriter postWriter = new PrintWriter(feedId+"_post.json", "UTF-8");
-        PrintWriter commentWriter = new PrintWriter(feedId+"_comment.json", "UTF-8");
+       // PrintWriter commentWriter = new PrintWriter(feedId+"_comment.json", "UTF-8");
 
         // For all xx feeds...
         for (int i = 0; i < feeds.size(); i++) {
@@ -66,7 +66,7 @@ public class PostsFromPageExtractor {
             String message = post.getMessage();
             // Print out the message.
 
-            PagableList<Comment> comments = post.getComments();
+           // PagableList<Comment> comments = post.getComments();
           //  String date = post.getCreatedTime().toString();
            // String name = post.getFrom().getName();
             //String id = post.getId();
@@ -86,7 +86,7 @@ public class PostsFromPageExtractor {
 
         }
             postWriter.close();
-            commentWriter.close();
+          //  commentWriter.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
