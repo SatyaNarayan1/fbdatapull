@@ -24,6 +24,8 @@ public class PostsFromPageExtractor {
 
         // Generate facebook instance.
         Facebook facebook = new FacebookFactory().getInstance();
+      //  System.out.println(facebook.getConfiguration().isJSONStoreEnabled() );
+
         // Use default values for oauth app id.
 //        facebook.setOAuthAppId("296251414082104","cb99043a762d7fbb1f16c6f19284c9fa");
 //        // Get an access token from:
@@ -65,14 +67,14 @@ public class PostsFromPageExtractor {
             // Print out the message.
 
             PagableList<Comment> comments = post.getComments();
-            String date = post.getCreatedTime().toString();
-            String name = post.getFrom().getName();
-            String id = post.getId();
+          //  String date = post.getCreatedTime().toString();
+           // String name = post.getFrom().getName();
+            //String id = post.getId();
+            String json  = DataObjectFactory.getRawJSON(post);
+           // System.out.println(json);
+            postWriter.println(json);
 
-            System.out.println(post);
-            postWriter.println(post);
-
-            for (int j = 0; j < comments.size(); j++) {
+          /*  for (int j = 0; j < comments.size(); j++) {
                 // Get post.
                 Comment comment = comments.get(j);
                 // Get (string) message.
@@ -80,7 +82,7 @@ public class PostsFromPageExtractor {
                 // Print out the message.
                 commentWriter.println(comment);
                 System.out.println("COMMENT #" + j + " : " + messageC);
-            }
+            }*/
 
         }
             postWriter.close();

@@ -12,7 +12,8 @@ public class SearchFB {
 
 
     public static void main (String[] args) {
-       // ConfigurationBuilder cb = new ConfigurationBuilder();
+      //  ConfigurationBuilder cb = new ConfigurationBuilder();
+       // cb.setJSONStoreEnabled()
 //        cb.setDebugEnabled(true)
 //                .setOAuthAppId("144749428931084")
 //                .setOAuthAppSecret("592860f4aea8b39193412f48cefe8022")
@@ -20,6 +21,7 @@ public class SearchFB {
 //                .setOAuthPermissions("email,public_profile,user_friends");
 //        FacebookFactory ff = new FacebookFactory(cb.build());
         Facebook facebook = new FacebookFactory().getInstance();
+
 
         // facebook.getOAuthAppAccessToken();
         BufferedReader br = null;
@@ -42,11 +44,13 @@ public class SearchFB {
 
 
 
-           ResponseList<User> results = facebook.searchUsers(user[1],new Reading().limit(2));
+           ResponseList<User> results = facebook.searchUsers(user[1].replaceFirst("MR ",""),new Reading().limit(2));
            // ResponseList<Post> results = facebook.searchPosts("ICICILombard");
             for(User u : results)
-            {   System.out.println( u);
-                userWriter.println(u);
+            { String json  = DataObjectFactory.getRawJSON(u);
+              //  System.out.println( json);
+                userWriter.println(json);
+              //  userWriter.println(u);
             }
 
             }
