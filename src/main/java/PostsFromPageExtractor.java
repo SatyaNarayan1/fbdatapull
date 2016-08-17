@@ -1,16 +1,11 @@
-import facebook4j.Comment;
-import facebook4j.Facebook;
-import facebook4j.FacebookException;
-import facebook4j.FacebookFactory;
-import facebook4j.PagableList;
-import facebook4j.Post;
-import facebook4j.Reading;
-import facebook4j.ResponseList;
+import facebook4j.*;
 import facebook4j.auth.AccessToken;
 import facebook4j.json.DataObjectFactory;
 import java.io.PrintWriter;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 public class PostsFromPageExtractor {
 
     /**
@@ -56,7 +51,8 @@ public class PostsFromPageExtractor {
         //          new Reading().limit(25));
         try {
         PrintWriter postWriter = new PrintWriter(feedId+"_post.json", "UTF-8");
-       // PrintWriter commentWriter = new PrintWriter(feedId+"_comment.json", "UTF-8");
+        PrintWriter commentWriter = new PrintWriter(feedId+"_comment.json", "UTF-8");
+            PrintWriter likesWriter = new PrintWriter(feedId+"_likes.json", "UTF-8");
 
         // For all xx feeds...
         for (int i = 0; i < feeds.size(); i++) {
@@ -66,27 +62,56 @@ public class PostsFromPageExtractor {
             String message = post.getMessage();
             // Print out the message.
 
-           // PagableList<Comment> comments = post.getComments();
+            PagableList<Comment> comments = post.getComments();
+            PagableList<Like> likes = post.getLikes();
           //  String date = post.getCreatedTime().toString();
            // String name = post.getFrom().getName();
-            //String id = post.getId();
+            String id = post.getId();
             String json  = DataObjectFactory.getRawJSON(post);
            // System.out.println(json);
             postWriter.println(json);
-
-          /*  for (int j = 0; j < comments.size(); j++) {
+            System.out.println(comments);
+            System.out.println(likes);
+            String parentId = id;
+            for (int j = 0; j < comments.size(); j++) {
                 // Get post.
                 Comment comment = comments.get(j);
-                // Get (string) message.
-                String messageC = comment.getMessage();
+
+                String msg = comment.getMessage();
+                String commentId = comment.getId();
+                JSONObject obj = new JSONObject();
+                obj.put("parentId", parentId);
+                obj.put("id", commentId);
+                obj.put("message",msg);
                 // Print out the message.
-                commentWriter.println(comment);
-                System.out.println("COMMENT #" + j + " : " + messageC);
-            }*/
+               // String commentJson  = DataObjectFactory.getRawJSON(comment);
+
+                commentWriter.println(obj.toString());
+
+            }
+            for (int j = 0; j < likes.size(); j++) {
+                // Get post.
+                Like like = likes.get(j);
+                // Get (string) message.
+                String likeId = like.getId();
+                String category = like.getCategory();
+                String name = like.getName();
+              //  String lik eJson  = DataObjectFactory.getRawJSON(like);
+
+                JSONObject obj = new JSONObject();
+                obj.put("parentId", parentId);
+                obj.put("id", likeId);
+                obj.put("name",name);
+                obj.put("category",category);
+                likesWriter.println(obj.toString());
+
+            }
+
 
         }
             postWriter.close();
-          //  commentWriter.close();
+             commentWriter.close();
+            likesWriter.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
