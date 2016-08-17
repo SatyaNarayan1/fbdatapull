@@ -79,10 +79,20 @@ public class PostsFromPageExtractor {
 
                 String msg = comment.getMessage();
                 String commentId = comment.getId();
+                String created_time = comment.getCreatedTime().toString();
+                Integer likeCount = comment.getLikeCount();
+                String from  = comment.getFrom().getName();
+                String fromId = comment.getFrom().getId();
                 JSONObject obj = new JSONObject();
                 obj.put("parentId", parentId);
                 obj.put("id", commentId);
                 obj.put("message",msg);
+                obj.put("created_time",created_time);
+                obj.put("likeCount",likeCount);
+                obj.put("from",from);
+                obj.put("fromId",fromId);
+
+
                 // Print out the message.
                // String commentJson  = DataObjectFactory.getRawJSON(comment);
 
